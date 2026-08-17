@@ -471,7 +471,7 @@ Now, we can describe the cutting plane algorithm for JCC at a high level. Algori
 \State $(\hat{x},\hat{\beta},\hat{y}) \gets $Solve DC Power Flow, \Cref{jcc_obj,jcc_cons,jcc_kcl,jcc_slack,jcc_limit,jcc_gen1,jcc_gen2}, with cuts $S$, risk $r\leq\epsilon$
 \If {Infeasible} \Return Problem Infeasible 
 \EndIf
-\State Calculate $\hat{s},\hat{z},\hat{r}$ using $(\hat{x},\hat{\beta},\hat{y})$ and \Cref{branch_cov,line_risk}
+\State Calculate $\hat{s},\hat{z},\hat{r}$ using $(\hat{x},\hat{\beta},\hat{y})$ and \Cref{branch_cov,line_risk2}
 \If {$\hat{r} \leq \epsilon + tol$} \Return Optimal $(\hat{x},\hat{\beta},\hat{y},\hat{s},\hat{z},\hat{r})$
 \EndIf
 \For{$\forall e$}

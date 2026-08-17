@@ -1,0 +1,68 @@
+% Process flow for the parallel OPA evaluation / pattern search routine.
+% Blue boxes are processes, red clouds are data, the diamond is the runit daemon.
+% Process node names follow the "Diagram" column of Table~\ref{tab:condorscript}.
+% Styles are set locally so the figure does not depend on which \tikzstyle
+% definitions happen to be in scope at the point of \input.
+\begin{tikzpicture}[
+    every node/.style = {font=\footnotesize},
+    proc/.style  = {draw, rectangle, rounded corners, fill=blue!20,
+                    text width=8em, align=center, minimum height=2.6em},
+    daem/.style  = {draw, diamond, aspect=1.7, fill=green!30,
+                    text width=5.5em, align=center, inner sep=1pt},
+    dat/.style   = {draw, ellipse, fill=red!20, align=center, inner sep=2pt},
+    flow/.style  = {draw, -latex', thick},
+    xfer/.style  = {draw, -latex', dashed},
+    lbl/.style   = {font=\scriptsize, inner sep=2pt}]
+
+  % --- processes: single centre column ---------------------------------
+  \node [daem] (daemon) at (0,0)    {Runit Daemon};
+  \node [proc] (search) at (0,-2)   {Pattern Search\\ Logic};
+  \node [proc] (dag)    at (0,-4)   {Dag File\\ Structure};
+  \node [proc] (submit) at (0,-6)   {DAGman Submit};
+  \node [proc] (job)    at (0,-8)   {CONTROL: job $t$};
+  \node [proc] (anal)   at (0,-10)  {Data Analysis};
+  \node [proc] (queue)  at (4.4,0)  {HTCondor\\ Queue Reader};
+
+  % --- data: single right-hand column ----------------------------------
+  \node [dat] (summ)   at (4.4,-2)  {summarized\\ .lsa / .lao};
+  \node [dat] (cap)    at (4.4,-4)  {Powerin/pt$t$\\ add.cap};
+  \node [dat] (shared) at (4.4,-6)  {shared/\\ grid.gr, simcplex.in\\ sl5bin, sl6bin, SLIBS};
+  \node [dat] (raw)    at (4.4,-8)  {raw\\ .dem / .lin};
+  \node [dat] (step)   at (4.4,-10) {step$N$/pt$t$\\ want.lsa, want.lao};
+
+  % rails kept clear of every node
+  \coordinate (rrail) at (8.1,0);
+  \coordinate (lrail) at (-3.4,0);
+
+  % --- process flow (solid) --------------------------------------------
+  \path [flow] (daemon) -- node[lbl,above]{poll queue} (queue);
+  \path [flow] (queue.north) -- ++(0,0.8) -| (daemon.north);
+  \path [flow] (daemon) -- (search);
+  \path [flow] (search) -- (dag);
+  \path [flow] (dag)    -- (submit);
+  \path [flow] (submit) -- (job);
+  \path [flow] (job)    -- (anal);
+
+  % next iteration: down the left rail, nothing else lives there
+  \path [flow] (anal.west) -- (lrail |- anal)
+        -- node[lbl,left,midway]{\shortstack{next\\ iteration}} (lrail |- daemon)
+        -- (daemon.west);
+
+  % --- data transfers (dashed) -----------------------------------------
+  \path [xfer] (summ)   -- (search);
+  \path [xfer] (dag)    -- (cap);
+  \path [xfer] (cap.south) -- (submit.north east);
+  \path [xfer] (shared) -- (submit);
+  \path [xfer] (job)    -- (raw);
+  \path [xfer] (raw.south) -- (anal.north east);
+  \path [xfer] (anal)   -- (step);
+
+  % summarised results feed the next pattern search: up the right rail
+  \path [xfer] (step.east) -- (rrail |- step)
+        -- (rrail |- summ) -- (summ.east);
+
+  % breathing room so the feedback rails are not flush against the figure edge
+  \path (current bounding box.south west) ++(-0.4,-0.4)
+        rectangle ($(current bounding box.north east) + (0.4,0.4)$);
+
+\end{tikzpicture}

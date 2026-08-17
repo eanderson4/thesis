@@ -1,0 +1,9 @@
+[ Source listing not included in this repository. ]
+
+The HTCondor driver scripts and pattern-search harness for Chapter 3 were kept
+outside version control and did not survive. The optimization models themselves
+are published as standalone repositories:
+
+    https://github.com/eanderson4/msip      multi-stage stochastic integer program
+    https://github.com/eanderson4/pow-opt   joint chance-constrained dispatch
+    https://github.com/eanderson4/opt-opa   joint chance constraint with OPA weighting

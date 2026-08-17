@@ -12,7 +12,7 @@
 	\begin{tikzpicture}[scale=1,line width=1]
 	\begin{axis}[scale=1.23 , ylabel=Load Shed, xlabel=Capacity , legend style={at={(1.5,.97)},anchor=north east}]
 
-		\addplot+[opacity=1,mark size=2,solid,thick,black] table[x expr=\thisrowno{0}*.1, y=ex] {\mypathdfodata/clusters/m-\i.dat};
+		\addplot+[opacity=1,mark size=2,solid,thick,black] table[x expr=\thisrowno{0}*.1, y=ex] {\mypathdfodata/clusters/\i.dat};
 	\addlegendentry{Expect}
 %		\addlegendentryexpanded{$\i$ - St. Dv.}	
 	\end{axis}

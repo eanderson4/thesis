@@ -10,6 +10,9 @@
 \addplot+[opacity=.7, mark size=.1] table[x=csjc,y=rsjc] {\mypathjccdata/cost-risk2.dat};
 \end{axis}
 \end{tikzpicture}
+% The L(.99) panel's data file (cost-risk6.dat) was not preserved in version
+% control.  Draw it when the data is present, otherwise show a placeholder.
+\IfFileExists{\mypathjccdata/cost-risk6.dat}{%
 \begin{tikzpicture}
 \begin{axis}[title=Cost vs Risk  L(.99),scale=.7, xlabel=Cost, ylabel=Risk, legend pos=outer north east]
 \addplot+[opacity=.7,mark size=1] table[x=copf,y=ropf] {\mypathjccdata/cost-risk6.dat};
@@ -20,4 +23,9 @@
 \addlegendentry{JCC}
 \end{axis}
 \end{tikzpicture}
+}{%
+\fbox{\parbox{0.34\linewidth}{\centering\footnotesize\vspace{4ex}
+Cost vs Risk L(.99)\\[1ex]
+Plot data not preserved\\ in this repository.\vspace{4ex}}}%
+}
 \end{document}

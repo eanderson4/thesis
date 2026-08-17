@@ -22,3 +22,7 @@
 *.xlsx
 
 *.bak
+# LaTeX side files produced by the endnotes / algorithm / listings packages
+*.ent
+*.loa
+*.lol

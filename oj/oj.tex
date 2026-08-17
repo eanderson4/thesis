@@ -293,6 +293,8 @@ While it is important that no lines fail, it may be overly restrictive while not
 
 \begin{figure}
 \centering
+% Scatter data (oj/data/jccS*.out) was not preserved in version control.
+\IfFileExists{\mypathojdata/jccS1.out}{%
 \begin{tikzpicture}[scale=.9]
 \begin{axis}[title=Risk Measure vs Load Shed, xlabel=Load Shed, ylabel={$P \left[ \mbox{At least one line fails} \right]$},legend pos=outer north east]
 %,ymax=.04%,xmin=\xmmm,xmax=1,
@@ -311,6 +313,7 @@ While it is important that no lines fail, it may be overly restrictive while not
 
 \end{axis}
 \end{tikzpicture}
+}{\datalost{Correlation scatter over OPA-seeded N-1 samples.}}
 \caption{Line failure risk and OPA not correlated}\label{jcc_and_opa}
 \end{figure}
 
@@ -364,6 +367,8 @@ In order to solve problems using this weighting scheme, it is nearly identical t
 
 \begin{figure}
 \centering
+% Scatter data (oj/data/jccS*.out) was not preserved in version control.
+\IfFileExists{\mypathojdata/jccS1.out}{%
 \begin{tikzpicture}[scale=1]
 \begin{axis}[title=Risk Measure vs Load Shed, xlabel=Load Shed, ylabel=JCC-OW Risk Measure,legend pos=outer north east]
 %,ymax=.04%,xmin=\xmmm,xmax=1,
@@ -385,6 +390,7 @@ In order to solve problems using this weighting scheme, it is nearly identical t
 
 \end{axis}
 \end{tikzpicture}
+}{\datalost{Correlation scatter over OPA-seeded N-1 samples.}}
 \caption{JCC $N-1$ OW correlated with OPA} \label{jcc_ow_correlated}
 \end{figure}
 

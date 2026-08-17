@@ -6,7 +6,12 @@
 \newcommand{\wrp}[1]{ $<$#1$>$}
 
 \usetikzlibrary{shapes.geometric,arrows,shadows,backgrounds}
-\usetikzlibrary{positioning-plus,node-families,calc}
+\usetikzlibrary{calc}
+% The tikz-ext bundle renamed these libraries (positioning-plus ->
+% ext.positioning-plus) after this thesis was written; accept either spelling.
+\IfFileExists{tikzlibraryext.positioning-plus.code.tex}
+  {\usetikzlibrary{ext.positioning-plus,ext.node-families}}
+  {\usetikzlibrary{positioning-plus,node-families}}
 
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -232,7 +237,7 @@ File && Size & Description \\
 
 
 \linespread{1}
-\lstinputlisting[language=bash,label={paramdef},caption={simcplex.in: Parameter definition file}]{\mypathdfocode/Powerin/shared/simcplex.in}
+\lstinputlistingif[language=bash,label={paramdef},caption={simcplex.in: Parameter definition file}]{\mypathdfocode/Powerin/shared/simcplex.in}
 \linespread{2}
 
 
@@ -478,7 +483,7 @@ The Center for High Throughput Computing provides computation resources for UW a
 The majority of the HTCondor cluster and UW-Madison uses the Scientific Linux distrubution with version 5 and 6.  The submit node used had SL6 installed, and I compiled the C++ binary directly on that machine.  In order to access the portion of the cluster which uses SL5, I had to find a remote resource with SL5 installed and build the binary remotely on that machine.  HTCondor gives a way to have an interactive session the remote resource.  In the HTCondor submit file (\Cref{interactivesession}) I request an interactive session and restrict the remote resource to be a MatlabBuildJob, which ensures an SL5 remote resource.  I transfer the source code and associated libraries as a tar file, unpack and build on the remote resource and close the session, which initiates a transfer of all newly created files, including the SL5 binary for the C++ code.
 
 \linespread{1}
-\lstinputlisting[language=bash,label={interactivesession},caption={inter-sl5.cmd: HTCondor submit file to run an interactive session on an SL5 machine}]{\mypathdfocode/Powerin/intersl5.cmd}
+\lstinputlistingif[language=bash,label={interactivesession},caption={inter-sl5.cmd: HTCondor submit file to run an interactive session on an SL5 machine}]{\mypathdfocode/Powerin/intersl5.cmd}
 \linespread{2}
 
 
@@ -518,7 +523,7 @@ Now, we begin to outline the parallelization routine used with condor to optimiz
 
 The runit daemon begins by determining whether the optimization routine is currently running.  This allows the process to be started and stopped at will and ensures robustness to loss of network connection.  The daemon queries the proc.py script to check the condor queue and the current folder structure to see if any jobs are currently running or there has been steps taken in the optimization routine.  If there is, it continues where it left off, otherwise it initiates the first step in the optimization algorithm.  It has the option to give a set of initial lines to search from function improvement, otherwise it evaluates the nominal system.  The condor file structure is made, the job is submitted, and the daemon waits for the results.
 %\linespread{1}
-%\lstinputlisting[language=bash,label={runit},caption={runit: Main Process Flow}]{\mypathdfocode/runit.sh}
+%\lstinputlistingif[language=bash,label={runit},caption={runit: Main Process Flow}]{\mypathdfocode/runit.sh}
 %\linespread{2}
 
 After the process set up, we begin a standard iteration.  The daemon waits for the HTCondor queue to become empty and when it does it begins to initiate processes.  It starts by summarizing the output to be used in the pattern search logic.  After this is done, the pattern search logic determines which lines should be searched for improvement and the condor file submit structure is created based on these search directions.  The daemon submits the condor jobs and then begins waiting again for their completion.
@@ -527,7 +532,7 @@ HTCondor DAGman was used for job submission in the intra-iteration process flow.
 
 DAGman uses a very specific file structure in order to submit jobs that have shared resources.  The file structure for the input to DAGman is given in \Cref{fig:filedagman}.  To make the DAG submission job, Powerin is given as the input directory.  Powerin contains a folder called shared that holds the resources needed for every job.  DAGman creates a job for each folder inside Powerin and that folder holds the files necessary for that particular job.  In our case, we include a \wrp{.cap} file which defines the design decision $u$ for that particular trial point.  In the shared folder, there is a file called CONTROL (\Cref{controlfile}) that DAGman uses to process each job.  CONTROL is a list of shell command to initiate on the host resource. 
 \linespread{1}
-\lstinputlisting[language=bash,label={controlfile},caption={CONTROL: commands to run on remote resource}]{\mypathdfocode/Powerin/shared/CONTROL.f}
+\lstinputlistingif[language=bash,label={controlfile},caption={CONTROL: commands to run on remote resource}]{\mypathdfocode/Powerin/shared/CONTROL.f}
 \linespread{2}
  Additionally, the grid definition file, as well as the simulation parameters, are stored there as they do not change from job to job.  Packed in sl5.tar.gz and sl6bin.tar.gz are the binaries for those particular instances, and DAGman only brings the correct binary depending on the host resource being used.  SLIBS.tar.gz contains the common libraries that are used by the programs and python scripts.  The python data analysis scripts are also used at the remote resource to process the raw data files in order to reduce the network transfers.  The REMOVE file cleans up the host resource before the job ends and every newly created file that is not removed is transferred back to the submit node.  The other files contained in Powerin are scripts used to create the job folders and run the pattern search logic.  After the folder structure has been created, a condor dag job can be created by running the following command.
 \begin{lstlisting}
@@ -600,8 +605,8 @@ Using a relatively naive pattern search with a fine mesh grid aligned on the coo
 
 
 \linespread{1}
-\lstinputlisting[language=bash,label={optimalpointcap},caption={point.cap: Transmission expansion design from pattern search method}]{\mypathdfocode/opt/point3.cap}
-\lstinputlisting[language=bash,label={optimalpointlsa},caption={point.lsa: Load shed analysis from chosen design}]{\mypathdfocode/opt/point.lsa}
+\lstinputlistingif[language=bash,label={optimalpointcap},caption={point.cap: Transmission expansion design from pattern search method}]{\mypathdfocode/opt/point3.cap}
+\lstinputlistingif[language=bash,label={optimalpointlsa},caption={point.lsa: Load shed analysis from chosen design}]{\mypathdfocode/opt/point.lsa}
 \linespread{2}
 
 
