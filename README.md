@@ -78,7 +78,7 @@ intro/            Ch. 1  introduction      oj/     Ch. 5  JCC with OPA weighting
 back.tex          conclusion, appendix     figures/  curated PNGs
 ```
 
-The solvers themselves live in separate repositories: [`msip`](https://github.com/eanderson4/msip), [`pow-opt`](https://github.com/eanderson4/pow-opt), [`opt-opa`](https://github.com/eanderson4/opt-opa).
+The solvers live in separate repositories: [`opt-opa`](https://github.com/eanderson4/opt-opa) (optimization over the OPA structure with a variable first-stage model), [`msip`](https://github.com/eanderson4/msip) (cascade solved over a stochastic tree with common random numbers), and [`pow-opt`](https://github.com/eanderson4/pow-opt) (power grid calculations).
 
 ## Notes on this repository
 
