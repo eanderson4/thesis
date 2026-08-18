@@ -102,6 +102,24 @@
 
 \newcommand{\bc}[1]{}
 
+% A few result data files were not preserved in version control.  Where a plot
+% cannot be redrawn, show an explicit placeholder rather than silently dropping
+% the figure, so numbering, captions and cross-references stay intact.
+\newcommand{\datalost}[1]{%
+  \fbox{\parbox{0.42\linewidth}{\centering\footnotesize\vspace{3ex}
+    Plot data not preserved\\ in this repository.\\[.5ex]
+    \textit{#1}\vspace{3ex}}}%
+}
+
+% The Chapter 3 driver scripts (dfo/code) were never committed.  Fall back to a
+% placeholder so the listing keeps its caption, label and cross-references and
+% the document still builds.
+\newcommand{\lstinputlistingif}[2][]{%
+  \IfFileExists{#2}%
+    {\lstinputlisting[#1]{#2}}%
+    {\lstinputlisting[#1]{missing-listing.txt}}%
+}
+
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{corollary}{Corollary}[theorem]
@@ -123,7 +141,10 @@
 
 
 %\setlength{\textwidth}{15cm}
-\linespread{2}
+% The Graduate School required double spacing for the submitted copy.  For the
+% reading copy (make reading) fall back to the tighter setting from header2.tex,
+% which was the preferred layout before the formatting guidelines applied.
+\ifdefined\readingcopy \linespread{1.1}\else \linespread{2}\fi
 \parindent 1cm
 \parskip 0.2cm
 %\topmargin 1in %1cm  %.3cm

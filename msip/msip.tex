@@ -328,7 +328,7 @@ with $M^\theta_e = 2 \theta_{max} + X_e U_e$.
 
 
 \subsection*{Failure Density Function}
-The OPA simulation uses a step function for the failure probability of a line shown in \Cref{opafail}.  We modify the effective capacity distribution to give ramp up line failure risk according to a piecewise linear function also shown in \Cref{opafail}   To approximately model this analytically, a sample from the distribution can be used to form the effective capacity of the lines.  Let $\omega_n \equiv\left[ 0, 0, 1, 0, \cdots, 1\right]$  be a vector sampled from a Bernoulli distribution and let $\alpha_n \in \R{|\cE|}$ be a vector sampled from a uniform distribution between $L_e$ and $U_e$ for each line.  Now, a line fails if $y_{ne} \ge \alpha_{ne} U_e$ and $\omega_{ne} =1$.  With this sampling, the effective capacity can be designed to incorporate this information.    
+The OPA simulation uses a step function for the failure probability of a line shown in \Cref{cdf}.  We modify the effective capacity distribution to give ramp up line failure risk according to a piecewise linear function also shown in \Cref{cdf}   To approximately model this analytically, a sample from the distribution can be used to form the effective capacity of the lines.  Let $\omega_n \equiv\left[ 0, 0, 1, 0, \cdots, 1\right]$  be a vector sampled from a Bernoulli distribution and let $\alpha_n \in \R{|\cE|}$ be a vector sampled from a uniform distribution between $L_e$ and $U_e$ for each line.  Now, a line fails if $y_{ne} \ge \alpha_{ne} U_e$ and $\omega_{ne} =1$.  With this sampling, the effective capacity can be designed to incorporate this information.    
 \begin{equation}
  R_{ne} = 
  \left\{ 

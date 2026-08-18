@@ -1,0 +1,11 @@
+[ Source listing not included in this repository. ]
+
+The HTCondor driver scripts and pattern-search harness for Chapter 3 were kept
+outside version control and did not survive. The optimization models themselves
+are published as standalone repositories:
+
+    https://github.com/eanderson4/opt-opa   optimize over the OPA structure with a
+                                            variable first stage model
+    https://github.com/eanderson4/msip      cascade solved over a stochastic tree
+                                            with common random numbers
+    https://github.com/eanderson4/pow-opt   power grid calculations
